@@ -1,7 +1,11 @@
 import React from 'react'
 
-export default function gif() {
+const Gif = (props) => {
+  console.log(props)
   return (
-    <li></li>
+    <li className='gif-wrap'>
+      <img src={props.url} />
+    </li>
   )
 }
+export default Gif;

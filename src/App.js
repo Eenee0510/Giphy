@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Gifs from "./components/Gifs";
+import GifList from './components/GifList'
 import SearchForm from "./components/SearchForm";
 
 class App extends Component {
@@ -13,8 +13,14 @@ constructor() {
 componentDidMount() {
   fetch("http://api.giphy.com/v1/gifs/trending?api_key=k2wbuloRNTvqpq7Ur2LWB6nebopeIb2F")
   .then((response)=>response.json())
-  .then((data)=>console.log(data))
+  .then((data)=>{
+  this.setState({gifs: data.data})
+})
+.catch((error) => {
+  console.log("Error fetching and parsing data", error)
+})
 }
+
 
   render() {
     return (
@@ -24,7 +30,7 @@ componentDidMount() {
           <SearchForm />
         </div>
       <div className="main-content">
-        <Gifs />
+        <GifList data={this.state.gifs} />
       </div>
       </div>
     );
