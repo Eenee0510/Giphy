@@ -12,35 +12,37 @@ constructor() {
     gifs: []
   }
 }
-componentDidMount() {
-axios.get("http://api.giphy.com/v1/gifs/trending?api_key=k2wbuloRNTvqpq7Ur2LWB6nebopeIb2F")
-.then((response) => 
-{
-  this.setState({
-    gifs: response.data.data,
+// componentDidMount() {
+//   const horse = "horse";
+
+
+// //   fetch("http://api.giphy.com/v1/gifs/search?q=cats&api_key=k2wbuloRNTvqpq7Ur2LWB6nebopeIb2F")
+// //   .then((response)=>response.json())
+// //   .then((data)=>{
+// //   this.setState({gifs: data.data})
+// // })
+// // .catch((error) => {
+// //   console.log("Error fetching and parsing data", error)
+// // })
+// }
+performSearch = (query) => {
+  axios.get(`http://api.giphy.com/v1/gifs/search?q=${query}&api_key=k2wbuloRNTvqpq7Ur2LWB6nebopeIb2F`)
+  .then((response) => 
+  {
+    this.setState({
+      gifs: response.data.data,
+    })
   })
-})
-.catch((error) => {
-  console.log("Error fetching and parsing data", error);
-});
-
-//   fetch("http://api.giphy.com/v1/gifs/trending?api_key=k2wbuloRNTvqpq7Ur2LWB6nebopeIb2F")
-//   .then((response)=>response.json())
-//   .then((data)=>{
-//   this.setState({gifs: data.data})
-// })
-// .catch((error) => {
-//   console.log("Error fetching and parsing data", error)
-// })
+  .catch((error) => {
+    console.log("Error fetching and parsing data", error);
+  });
 }
-
-
-  render() {
+ render() {
     return (
       <div className="main-header">
         <div className="inner">
           <h1 className="main-title">Search App</h1>
-          <SearchForm />
+          <SearchForm onSearch = {this.performSearch}/>
         </div>
       <div className="main-content">
         <GifList data={this.state.gifs} />
